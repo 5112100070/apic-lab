@@ -56,3 +56,4 @@ Akan muncul tampilan sebagai berikut:
 
      Silahkan cek email untuk melihat status dari reservasi atau cek halaman [My Reservation](https://techzone.ibm.com/my/reservations)
      ![](images/preparation-6.png)
+8. Ketika reservasi anda sudah pada status **READY** tahap ini selesai. 

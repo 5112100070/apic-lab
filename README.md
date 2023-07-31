@@ -5,6 +5,8 @@ Dokumen ini menjelaskan bagaimana melakukan provisioning step by step dengan pla
 ## Platform Preparation
 Sebelum melakukan demo ikuti langkah ini untuk melakukan provisioning dan standart setup pada API Connect 
 
+[Click To See Preparation](https://github.com/5112100070/apic-lab/tree/master/preparation)
+
 ### APIC demo guided lab
 
 [Lab 0 : Get Started](https://github.com/5112100070/apic-lab/tree/main/instructions/Lab0)
