@@ -1,0 +1,32 @@
+swagger: '2.0'
+info:
+  title: deposit
+  version: 1.0.0
+  description: deposit
+paths:
+  /rates:
+    get:
+      operationId: getRates
+      responses:
+        '200':
+          description: The operation was successful.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/rate'
+      produces:
+        - application/json
+      description: Retrieve rates
+basePath: /deposit/v1
+definitions:
+  rate:
+    type: object
+    properties:
+      durationInYears:
+        type: integer
+      interestRateInPercent:
+        type: integer
+schemes:
+  - https
+securityDefinitions: {}
+security: []

@@ -1,0 +1,102 @@
+swagger: '2.0'
+info:
+  title: hotelreview
+  version: 1.0.0
+  description: hotelreview
+  x-ibm-name: hotelreview
+paths:
+  /createReview:
+    post:
+      operationId: postCreateReview
+      responses:
+        '200':
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/reviewResp'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: Insert a createReview
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/review'
+          description: The request body for the operation
+          required: true
+  /reviews:
+    get:
+      operationId: getReviews
+      responses:
+        '200':
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/getReviewResp'
+      produces:
+        - application/json
+      description: Retrieve reviews
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: true
+        - name: size
+          in: query
+          type: integer
+          required: true
+basePath: /hotelreview/v1
+definitions:
+  review:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      city:
+        type: string
+      rating:
+        type: integer
+  reviewResp:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      city:
+        type: string
+      rating:
+        type: integer
+  getReviewResp:
+    type: object
+    properties:
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/review'
+      last:
+        type: boolean
+      totalElements:
+        type: integer
+      totalPages:
+        type: integer
+      numberOfElements:
+        type: integer
+      first:
+        type: boolean
+      size:
+        type: integer
+      number:
+        type: integer
+      sort:
+        type:
+          - string
+          - 'null'
+schemes:
+  - https
+securityDefinitions: {}
+security: []
