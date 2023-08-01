@@ -1,4 +1,4 @@
-# Lab API CONNECT
+# Lab APIC(API CONNECT)
 Dokumen ini menjelaskan bagaimana melakukan provisioning step by step dengan platform [Techzone](https://techzone.ibm.com/) dan melakukan standart demo untuk client.
 #
 
@@ -32,6 +32,8 @@ Berikut merupakan list aset-aset pendukung untuk mendukung lab atau demo diatas
 [logistics.yaml](https://github.com/5112100070/apic-lab/blob/main/logistics.yaml)
 
 [calculate.wsdl](https://github.com/5112100070/apic-lab/blob/main/calculate.wsdl)  
+
+[petstore.yaml](https://raw.githubusercontent.com/5112100070/apic-lab/master/petstore.yaml)
 
 ## Warning
 Dokumen ini dibuat hanya untuk konsumsi internal
