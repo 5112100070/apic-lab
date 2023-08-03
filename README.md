@@ -7,6 +7,14 @@ Sebelum melakukan demo ikuti langkah ini untuk melakukan provisioning dan standa
 
 [Click To See Preparation](https://github.com/5112100070/apic-lab/tree/master/preparation)
 
+## MVP Full Demo Preparation
+Untuk tutorial ini bersifat **Optional**. Tutorial ini jika memang ada keperluan untuk melakukan full demo CP4I secara terintegrasi. 
+
+Langkah-langkah yang perlu dipersiapkan adalah:
+1. Siapkan Platform Standart CP4I [Click To See Preparation](https://github.com/5112100070/apic-lab/tree/master/preparation)
+2. Siapkan Platform Untuk Cluster **Kafka**.
+
+
 ### APIC demo guided lab
 
 [Lab 0 : Get Started](https://github.com/5112100070/apic-lab/tree/main/instructions/Lab0)
@@ -33,7 +41,7 @@ Berikut merupakan list aset-aset pendukung untuk mendukung lab atau demo diatas
 
 [calculate.wsdl](https://github.com/5112100070/apic-lab/blob/main/calculate.wsdl)  
 
-[petstore.yaml](https://raw.githubusercontent.com/5112100070/apic-lab/master/petstore.yaml)
+[petstore.yaml](https://gist.githubusercontent.com/5112100070/fe4ad63b30a78d6ba4bc6c2e0bf46e67/raw/516eb9e3e9d593839f042ba3901ea2adcc21964d/petstore.yaml)
 
 ## Warning
 Dokumen ini dibuat hanya untuk konsumsi internal

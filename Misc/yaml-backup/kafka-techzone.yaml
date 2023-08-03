@@ -1,0 +1,2715 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    olm.skipRange: '>=3.1.0 <3.2.0'
+    cloudpakId: c8b82d189e7545f0892db9ef2731b90d
+    certified: 'false'
+    olm.targetNamespaces: cp4i
+    operatorframework.io/properties: >-
+      {"properties":[{"type":"olm.gvk","value":{"group":"core.eventstreams.ibm.com","kind":"StrimziPodSet","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaConnect","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaMirrorMaker2","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaMirrorMaker2","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"EventStreams","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaUser","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"EventStreamsGeoReplicator","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaRebalance","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaTopic","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"ibm-eventstreams","version":"3.2.0"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaUser","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaBridge","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaConnect","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"Kafka","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaRebalance","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"EventStreams","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaConnector","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaTopic","version":"v1beta1"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaTopic","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaUser","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"Kafka","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaBridge","version":"v1beta2"}},{"type":"olm.gvk","value":{"group":"eventstreams.ibm.com","kind":"KafkaConnector","version":"v1beta2"}}]}
+    alm-examples-metadata: |-
+      {
+        "light-insecure": {
+          "description": "Suitable for basic development and test activities in environments with minimum resource requirements where storage persistence, access control and encryption are not required.",
+          "name": "Lightweight without security",
+          "resources": {
+            "cpu": "8.2",
+            "memory": "8.2 GB",
+            "vpc": "0.5"
+          }
+        },
+        "development": {
+          "description": "Ideal for trying out Event Streams. Suitable for basic development and test activities, with high availability but no storage persistence.",
+          "name": "Development",
+          "resources": {
+            "cpu": "12.2",
+            "memory": "14.2 GB",
+            "vpc": "1.5"
+          }
+        },
+        "minimal-prod": {
+          "description": "A secured cluster of 3 Kafka brokers licensed for production use, with the least resource footprint for a gentle workload.",
+          "name": "Minimal production",
+          "resources": {
+            "cpu": "12.2",
+            "memory": "14.2 GB",
+            "vpc": "3"
+          }
+        },
+        "prod-3-brokers": {
+          "description": "A secured cluster of 3 Kafka brokers licensed for production use, configured for a production workload with more resource bandwidth than the minimal production sample.",
+          "name": "Production 3 brokers",
+          "resources": {
+            "cpu": "21.2",
+            "memory": "31.9 GB",
+            "vpc": "12"
+          }
+        },
+        "prod-6-brokers": {
+          "description": "A secured cluster of 6 Kafka brokers licensed for production use, configured for increased message capacity compared to 3 brokers.",
+          "name": "Production 6 brokers",
+          "resources": {
+            "cpu": "33.2",
+            "memory": "55.6 GB",
+            "vpc": "24"
+          }
+        },
+        "prod-9-brokers": {
+          "description": "A secured cluster of 9 Kafka brokers licensed for production use, configured for a high throughput workload.",
+          "name": "Production 9 brokers",
+          "resources": {
+            "cpu": "45.2",
+            "memory": "79.3 GB",
+            "vpc": "36"
+          }
+        }
+      }
+    support: IBM
+    cloudpakName: IBM Cloud Pak for Integration
+    operators.openshift.io/infrastructure-features: '["Disconnected"]'
+    alm-examples: >-
+      [{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"light-insecure"},"spec":{"version":"latest","license":{"accept":false,"license":"","use":""},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"security":{"internalTls":"NONE"},"strimziOverrides":{"kafka":{"replicas":1,"config":{"inter.broker.protocol.version":"3.4","offsets.topic.replication.factor":1,"transaction.state.log.min.isr":1,"transaction.state.log.replication.factor":1},"listeners":[{"name":"plain","port":9092,"type":"internal","tls":false}],"storage":{"type":"ephemeral"},"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"light-insecure-metrics-config"}}}},"zookeeper":{"replicas":1,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"light-insecure-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":false,"monitoring":false}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"development"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"minimal-prod"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-3-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-6-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":6,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":6,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"50Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-9-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":9,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":9,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"100Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta1","kind":"EventStreamsGeoReplicator","metadata":{"name":"minimal-prod","labels":{"eventstreams.ibm.com/cluster":"minimal-prod"}},"spec":{"version":"latest","replicas":1}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Write"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer-producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"*","patternType":"literal"},"operations":["Write","Read","Create"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read","Alter"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaConnect","metadata":{"name":"non-prod"},"spec":{"template":{"connectContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}},"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+      Event Streams for Non
+      Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-KAFKA-CONNECT-CR>-connect","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+      Cloud Pak for
+      Integration","productCloudpakRatio":"2:1"}}}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","tls":{"trustedCertificates":[{"secretName":"my-cluster-cluster-ca-cert","certificate":"ca.crt"}]},"config":{"group.id":"connect-cluster","offset.storage.topic":"connect-cluster-offsets","config.storage.topic":"connect-cluster-configs","status.storage.topic":"connect-cluster-status"},"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"certificateAndKey":{"certificate":"user.crt","key":"user.key","secretName":"my-bridge"},"type":"tls"},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaMirrorMaker2","metadata":{"name":"non-prod"},"spec":{"template":{"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+      Event Streams for Non
+      Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-MM2-CR>-mirrormaker2","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+      Cloud Pak for
+      Integration","productCloudpakRatio":"2:1"}}}},"connectCluster":"my-cluster-target","clusters":[{"alias":"my-cluster-source","bootstrapServers":"my-cluster-source-kafka-bootstrap:9092"},{"alias":"my-cluster-target","bootstrapServers":"my-cluster-target-kafka-bootstrap:9092","config":{"config.storage.replication.factor":1,"offset.storage.replication.factor":1,"status.storage.replication.factor":1}}],"mirrors":[{"sourceCluster":"my-cluster-source","targetCluster":"my-cluster-target","sourceConnector":{"config":{"replication.factor":1,"offset-syncs.topic.replication.factor":1,"sync.topic.acls.enabled":"false"}},"heartbeatConnector":{"config":{"heartbeats.topic.replication.factor":1}},"checkpointConnector":{"config":{"checkpoints.topic.replication.factor":1}},"topicsPattern":".*","groupsPattern":".*"}],"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"type":"scram-sha-512","username":"my-bridge","passwordSecret":{"secretName":"my-bridge","password":"password"}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"dev-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"min-prod-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}}}}]
+    capabilities: Seamless Upgrades
+    olm.operatorNamespace: cp4i
+    containerImage: >-
+      icr.io/cpopen/ibm-eventstreams-operator@sha256:4b8acfbc027912bc8e06b7c0e361df848977ea0352bb206e8922ca21e447a33d
+    operators.operatorframework.io/internal-objects: '["kafkas.eventstreams.ibm.com","strimzipodsets.core.eventstreams.ibm.com"]'
+    createdAt: '2023-05-26 09:29:07'
+    categories: Streaming & Messaging
+    description: >-
+      Kafka-based messaging platform for handling real-time data feeds. This
+      operator is also available as part of IBM Cloud Pak for Integration (CP4I)
+    olm.operatorGroup: cp4i-og
+  resourceVersion: '2258117'
+  name: ibm-eventstreams.v3.2.0
+  uid: e135e1c6-c3b6-426b-b8f0-32087c1f549a
+  creationTimestamp: '2023-07-31T15:22:44Z'
+  generation: 1
+  managedFields:
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:cloudpakName': {}
+            'f:operators.operatorframework.io/internal-objects': {}
+            'f:operators.openshift.io/infrastructure-features': {}
+            'f:createdAt': {}
+            'f:description': {}
+            'f:capabilities': {}
+            'f:olm.skipRange': {}
+            .: {}
+            'f:containerImage': {}
+            'f:categories': {}
+            'f:certified': {}
+            'f:alm-examples-metadata': {}
+            'f:operatorframework.io/properties': {}
+            'f:cloudpakId': {}
+            'f:support': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:name': {}
+            'f:operatorframework.io/arch.amd64': {}
+            'f:operatorframework.io/arch.ppc64le': {}
+            'f:operatorframework.io/arch.s390x': {}
+            'f:operatorframework.io/os.linux': {}
+        'f:spec':
+          'f:version': {}
+          'f:provider':
+            .: {}
+            'f:name': {}
+          'f:links': {}
+          'f:install':
+            .: {}
+            'f:spec':
+              .: {}
+              'f:clusterPermissions': {}
+              'f:deployments': {}
+              'f:permissions': {}
+            'f:strategy': {}
+          'f:maintainers': {}
+          'f:description': {}
+          'f:installModes': {}
+          'f:icon': {}
+          'f:customresourcedefinitions':
+            .: {}
+            'f:owned': {}
+          .: {}
+          'f:relatedImages': {}
+          'f:cleanup':
+            .: {}
+            'f:enabled': {}
+          'f:apiservicedefinitions': {}
+          'f:selector':
+            .: {}
+            'f:matchLabels':
+              .: {}
+              'f:name': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:name': {}
+            'f:operatorframework.io/arch.amd64': {}
+            'f:operatorframework.io/arch.ppc64le': {}
+            'f:operatorframework.io/arch.s390x': {}
+            'f:operatorframework.io/os.linux': {}
+          'f:displayName': {}
+          'f:keywords': {}
+      manager: catalog
+      operation: Update
+      time: '2023-07-31T15:22:44Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:olm.operatorGroup': {}
+            'f:olm.operatorNamespace': {}
+            'f:olm.targetNamespaces': {}
+          'f:labels':
+            'f:operators.coreos.com/ibm-eventstreams.cp4i': {}
+      manager: olm
+      operation: Update
+      time: '2023-07-31T15:22:45Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:lastUpdateTime': {}
+          'f:requirementStatus': {}
+          'f:phase': {}
+          'f:lastTransitionTime': {}
+          'f:conditions': {}
+          .: {}
+          'f:cleanup': {}
+          'f:message': {}
+          'f:reason': {}
+      manager: olm
+      operation: Update
+      subresource: status
+      time: '2023-07-31T15:22:51Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:alm-examples': {}
+      manager: Mozilla
+      operation: Update
+      time: '2023-08-03T06:04:46Z'
+  namespace: cp4i
+  labels:
+    app: eventstreams
+    name: ibm-eventstreams
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    operators.coreos.com/ibm-eventstreams.cp4i: ''
+spec:
+  customresourcedefinitions:
+    owned:
+      - description: >-
+          Creates a complete instance of Event Streams, including Kafka and
+          ZooKeeper, and an administration user interface.
+
+
+          Documentation: https://ibm.github.io/event-streams
+
+
+          License: https://ibm.biz/es-license
+        displayName: Event Streams
+        kind: EventStreams
+        name: eventstreams.eventstreams.ibm.com
+        resources:
+          - kind: Kafka
+            name: kafkas.eventstreams.ibm.com
+            version: v1beta2
+          - kind: StatefulSet
+            name: ''
+            version: v1
+          - kind: Deployment
+            name: ''
+            version: v1
+          - kind: ReplicaSet
+            name: ''
+            version: v1
+          - kind: Pod
+            name: ''
+            version: v1
+          - kind: Route
+            name: ''
+            version: route.openshift.io/v1
+          - kind: Service
+            name: ''
+            version: v1
+          - kind: ConfigMap
+            name: ''
+            version: v1
+          - kind: Secret
+            name: ''
+            version: v1
+        specDescriptors:
+          - description: >-
+              By installing this product you accept the license terms at
+              https://ibm.biz/es-license
+            displayName: License accept
+            path: license.accept
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:checkbox'
+          - description: >-
+              Specify which License ID your installation is to be used under,
+              license terms at https://ibm.biz/es-license
+            displayName: Product License
+            path: license.license
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-HRZF-DWHH7A'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-YBXJ-ADJNSM'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-PYRA-849GYQ'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-CJR2RX'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-CJR2TC'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-CD3JKX'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-CD3JJU'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-C7QG3S'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-C7QFZX'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-C5CSNH'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-C5CSM2'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-BZFQU2'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:L-RJON-BZFQSB'
+          - description: >-
+              Specify if you intend for this installation to be used in a
+              production environment, license terms and uses at
+              https://ibm.biz/es-license
+            displayName: Product use
+            path: license.use
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:select:CloudPakForIntegrationProduction
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:select:CloudPakForIntegrationNonProduction
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:select:EventAutomationProduction
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:select:EventAutomationNonProduction
+          - description: Specify the version of Event Streams to create
+            displayName: Version
+            path: version
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:latest'
+          - description: Configuration for Kafka and ZooKeeper
+            displayName: Kafka cluster configuration
+            path: strimziOverrides
+            x-descriptors:
+              - 'urn:alm:descriptor:com.ibm.cp4i:flattened'
+          - description: Configure the Kafka cluster to deploy
+            displayName: Kafka
+            path: strimziOverrides.kafka
+          - description: Number of Kafka brokers
+            displayName: Kafka brokers
+            path: strimziOverrides.kafka.replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: Configure the storage to use for Kafka brokers
+            displayName: Storage
+            path: strimziOverrides.kafka.storage
+            x-descriptors:
+              - 'urn:alm:descriptor:com.ibm.cp4i:flattened'
+          - description: Type of storage used by Kafka brokers
+            displayName: Storage type
+            path: strimziOverrides.kafka.storage.type
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:ephemeral'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:persistent-claim'
+          - description: Storage class to use for the persistent-claim for Kafka brokers
+            displayName: Storage class
+            path: strimziOverrides.kafka.storage.class
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:strimziOverrides.kafka.storage.type:persistent-claim
+              - 'urn:alm:descriptor:io.kubernetes:StorageClass'
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+              - 'urn:alm:descriptor:com.ibm.cp4i:storage:block'
+              - 'urn:alm:descriptor:com.ibm.cp4i:storage:rwo'
+          - description: Storage size for the persistent-claim for each Kafka broker
+            displayName: Kafka Storage size
+            path: strimziOverrides.kafka.storage.size
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:strimziOverrides.kafka.storage.type:persistent-claim
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Configure the ZooKeeper ensemble
+            displayName: Zookeeper
+            path: strimziOverrides.zookeeper
+          - description: Configure the storage used by ZooKeeper nodes
+            displayName: Storage
+            path: strimziOverrides.zookeeper.storage
+            x-descriptors:
+              - 'urn:alm:descriptor:com.ibm.cp4i:flattened'
+          - description: Type of storage used by ZooKeeper nodes
+            displayName: Storage type
+            path: strimziOverrides.zookeeper.storage.type
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:ephemeral'
+              - 'urn:alm:descriptor:com.tectonic.ui:select:persistent-claim'
+          - description: Storage class to use for the persistent-claim for ZooKeeper nodes
+            displayName: Storage class
+            path: strimziOverrides.zookeeper.storage.class
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:strimziOverrides.zookeeper.storage.type:persistent-claim
+              - 'urn:alm:descriptor:io.kubernetes:StorageClass'
+              - 'urn:alm:descriptor:com.ibm.cp4i:storage:block'
+              - 'urn:alm:descriptor:com.ibm.cp4i:storage:rwo'
+          - description: Storage size for the persistent-claim for each ZooKeeper node
+            displayName: Storage size
+            path: strimziOverrides.zookeeper.storage.size
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:strimziOverrides.zookeeper.storage.type:persistent-claim
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: 'request ibm services, Iam and Monitoring'
+            displayName: Request ibm services (see YAML view)
+            path: requestIbmServices
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Kafka metrics config
+            displayName: Kafka Metrics config (see YAML view)
+            path: strimziOverrides.kafka.metricsConfig
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Zookeeper metrics config
+            displayName: ZooKeeper Metrics Config (see YAML view)
+            path: strimziOverrides.zookeeper.metricsConfig
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Zookeeper jmx options
+            displayName: ZooKeeper Jmx Options (see YAML view)
+            path: strimziOverrides.zookeeper.jmxOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Specifies if the persistent volume claim has to be deleted when
+              the cluster is un-deployed.
+            displayName: Kafka storage - deleteClaim (see YAML view)
+            path: strimziOverrides.kafka.storage.deleteClaim
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Storage identification number. It is mandatory only for storage
+              volumes defined in a storage of type 'jbod'.
+            displayName: Kafka storage - id (see YAML view)
+            path: strimziOverrides.kafka.storage.id
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Overrides for individual brokers. The `overrides` field allows to
+              specify a different configuration for different brokers.
+            displayName: Kafka storage - overrides (see YAML view)
+            path: strimziOverrides.kafka.storage.overrides
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Specifies a specific persistent volume to use. It contains
+              key:value pairs representing labels for selecting such a volume.
+            displayName: Kafka storage - selector (see YAML view)
+            path: strimziOverrides.kafka.storage.selector
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              When type=ephemeral, defines the total amount of local storage
+              required for this EmptyDir volume (for example 1Gi).
+            displayName: Kafka storage - sizeLimit (see YAML view)
+            path: strimziOverrides.kafka.storage.sizeLimit
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              List of volumes as Storage objects representing the JBOD disks
+              array.
+            displayName: Kafka storage - volumes (see YAML view)
+            path: strimziOverrides.kafka.storage.volumes
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's affinity rules.
+            displayName: Kafka - affinity (see YAML view)
+            path: strimziOverrides.kafka.affinity
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Authorization configuration for Kafka brokers.
+            displayName: Kafka - authorization (see YAML view)
+            path: strimziOverrides.kafka.authorization
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The image of the init container used for initializing the
+              `broker.rack`.
+            displayName: Kafka - brokerRackInitImage (see YAML view)
+            path: strimziOverrides.kafka.brokerRackInitImage
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Kafka broker config.
+            displayName: Kafka - config (see YAML view)
+            path: strimziOverrides.kafka.config
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Docker image to use for Kafka pods
+            displayName: Kafka - image (see YAML view)
+            path: strimziOverrides.kafka.image
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: JMX Options for Kafka brokers.
+            displayName: Kafka - jmxOptions (see YAML view)
+            path: strimziOverrides.kafka.jmxOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: JVM Options for Kafka brokers.
+            displayName: Kafka - jvmOptions (see YAML view)
+            path: strimziOverrides.kafka.jvmOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configures listeners of Kafka brokers.
+            displayName: Kafka - listeners (see YAML view)
+            path: strimziOverrides.kafka.listeners
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod liveness checking.
+            displayName: Kafka - livenessProbe (see YAML view)
+            path: strimziOverrides.kafka.livenessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Logging configuration for Kafka.
+            displayName: Kafka - logging (see YAML view)
+            path: strimziOverrides.kafka.logging
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Prometheus JMX Exporter configuration
+            displayName: Kafka - metrics (see YAML view)
+            path: strimziOverrides.kafka.metrics
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the `broker.rack` broker config.
+            displayName: Kafka - rack (see YAML view)
+            path: strimziOverrides.kafka.rack
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod readiness checking
+            displayName: Kafka - readinessProbe (see YAML view)
+            path: strimziOverrides.kafka.readinessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: CPU and memory resources to reserve.
+            displayName: Kafka - resources (see YAML view)
+            path: strimziOverrides.kafka.resources
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Template for Kafka cluster resources. The template allows users to
+              specify how are the `StatefulSet`, `Pods` and `Services`
+              generated.
+            displayName: Kafka - template (see YAML view)
+            path: strimziOverrides.kafka.template
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              TLS sidecar configuration. The TLS sidecar is not used anymore and
+              this option will be ignored.
+            displayName: Kafka - tlsSidecar (see YAML view)
+            path: strimziOverrides.kafka.tlsSidecar
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Kafka pod tolerations
+            displayName: Kafka - tolerations (see YAML view)
+            path: strimziOverrides.kafka.tolerations
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Version of Kafka that is running
+            displayName: Kafka - version (see YAML view)
+            path: strimziOverrides.kafka.version
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Specifies if the persistent volume claim has to be deleted when
+              the cluster is un-deployed.
+            displayName: ZooKeeper storage - deleteClaim (see YAML view)
+            path: strimziOverrides.zookeeper.storage.deleteClaim
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Storage identification number. It is mandatory only for storage
+              volumes defined in a storage of type 'jbod'.
+            displayName: ZooKeeper storage - id (see YAML view)
+            path: strimziOverrides.zookeeper.storage.id
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Overrides for individual brokers. The `overrides` field allows to
+              specify a different configuration for different brokers.
+            displayName: ZooKeeper storage - overrides (see YAML view)
+            path: strimziOverrides.zookeeper.storage.overrides
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Specifies a specific persistent volume to use. It contains
+              key:value pairs representing labels for selecting such a volume.
+            displayName: ZooKeeper storage - selector (see YAML view)
+            path: strimziOverrides.zookeeper.storage.selector
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              When type=ephemeral, defines the total amount of local storage
+              required for this EmptyDir volume (for example 1Gi).
+            displayName: ZooKeeper storage - sizeLimit (see YAML view)
+            path: strimziOverrides.zookeeper.storage.sizeLimit
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's affinity rules.
+            displayName: ZooKeeper - affinity (see YAML view)
+            path: strimziOverrides.zookeeper.affinity
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: ZooKeeper broker config
+            displayName: ZooKeeper - config (see YAML view)
+            path: strimziOverrides.zookeeper.config
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Docker image to use for ZooKeeper pods
+            displayName: ZooKeeper - image (see YAML view)
+            path: strimziOverrides.zookeeper.image
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: JVM options to use for ZooKeeper
+            displayName: ZooKeeper - jvmOptions (see YAML view)
+            path: strimziOverrides.zookeeper.jvmOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: ZooKeeper pod liveness checking
+            displayName: ZooKeeper - livenessProbe (see YAML view)
+            path: strimziOverrides.zookeeper.livenessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Logging configuration for ZooKeeper pods
+            displayName: ZooKeeper - logging (see YAML view)
+            path: strimziOverrides.zookeeper.logging
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Prometheus JMX Exporter configuration
+            displayName: ZooKeeper - metrics (see YAML view)
+            path: strimziOverrides.zookeeper.metrics
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Readiness probe to use for ZooKeeper pods
+            displayName: ZooKeeper - readinessProbe (see YAML view)
+            path: strimziOverrides.zookeeper.readinessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The number of pods in the cluster.
+            displayName: ZooKeeper - replicas (see YAML view)
+            path: strimziOverrides.zookeeper.replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Modifies the resource limits and requests to apply to this
+              component.
+            displayName: ZooKeeper - resources (see YAML view)
+            path: strimziOverrides.zookeeper.resources
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Template to override attributes for pods created for this
+              component.
+            displayName: ZooKeeper - template (see YAML view)
+            path: strimziOverrides.zookeeper.template
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: TLS sidecar configuration.
+            displayName: ZooKeeper - tlsSidecar (see YAML view)
+            path: strimziOverrides.zookeeper.tlsSidecar
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's tolerations.
+            displayName: ZooKeeper - tolerations (see YAML view)
+            path: strimziOverrides.zookeeper.tolerations
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the clients certificate authority.
+            displayName: Strimzi - clientsCa (see YAML view)
+            path: strimziOverrides.clientsCa
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the cluster certificate authority.
+            displayName: Strimzi - clusterCa (see YAML view)
+            path: strimziOverrides.clusterCa
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration for Cruise Control deployment. Deploys a Cruise
+              Control instance when specified.
+            displayName: Strimzi - cruiseControl (see YAML view)
+            path: strimziOverrides.cruiseControl
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the Entity Operator.
+            displayName: Strimzi - entityOperator (see YAML view)
+            path: strimziOverrides.entityOperator
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration for JmxTrans. When the property is present a
+              JmxTrans deployment is created for gathering JMX metrics from each
+              Kafka broker. For more information see
+              https://github.com/jmxtrans/jmxtrans[JmxTrans GitHub].
+            displayName: Strimzi - jmxTrans (see YAML view)
+            path: strimziOverrides.jmxTrans
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration of the Kafka Exporter. Kafka Exporter can provide
+              additional metrics, for example lag of consumer group at
+              topic/partition.
+            displayName: Strimzi - kafkaExporter (see YAML view)
+            path: strimziOverrides.kafkaExporter
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              A list of time windows for maintenance tasks (that is,
+              certificates renewal). Each time window is defined by a cron
+              expression.
+            displayName: Strimzi - maintenanceTimeWindows (see YAML view)
+            path: strimziOverrides.maintenanceTimeWindows
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the Topic Operator.
+            displayName: Strimzi - topicOperator (see YAML view)
+            path: strimziOverrides.topicOperator
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the Apicurio Registry server.
+            displayName: Apicurio Registry (see YAML view)
+            path: apicurioRegistry
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration of the Event Streams administration API server.
+            displayName: Admin Api (see YAML view)
+            path: adminApi
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Proxy server to filter traffic to the brokers.
+            displayName: Kafka Proxy (see YAML view)
+            path: kafkaProxy
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Configuration for accessing Event Streams Docker images.
+            displayName: Images (see YAML view)
+            path: images
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration of the web server that hosts the administration user
+              interface.
+            displayName: Admin UI (see YAML view)
+            path: adminUI
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration of the collector server responsible for aggregating
+              metrics from Kafka brokers.
+            displayName: Metrics (see YAML view)
+            path: collector
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration of the REST Producer server that allows messages to
+              be produced to Kafka topics from REST clients.
+            displayName: REST Producer (see YAML view)
+            path: restProducer
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Security configuration for the Event Streams components.
+            displayName: Security (see YAML view)
+            path: security
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configure what TLS version Event Streams components use to
+              communicate with one another.
+            displayName: Security - internalTls (see YAML view)
+            path: security.internalTls
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+        statusDescriptors:
+          - description: URL for the Event Streams UI
+            displayName: Admin UI
+            path: adminUiUrl
+            x-descriptors:
+              - 'urn:alm:descriptor:org.w3:link'
+          - description: Phase description
+            displayName: Phase
+            path: phase
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Identifies if custom images are being used
+            displayName: Custom Images
+            path: customImages
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: A list of recent conditions of the EventStreams instance
+            displayName: Status Conditions
+            path: conditions
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes.conditions'
+        version: v1beta2
+      - description: >-
+          Replicates data between Event Streams clusters and aids in disaster
+          recovery.
+
+
+          Documentation: https://ibm.biz/es-docs-georep-config
+
+
+          License: https://ibm.biz/es-license
+        displayName: Geo-Replicator
+        kind: EventStreamsGeoReplicator
+        name: eventstreamsgeoreplicators.eventstreams.ibm.com
+        resources:
+          - kind: Service
+            name: ''
+            version: v1
+          - kind: Deployment
+            name: ''
+            version: v1
+          - kind: ReplicaSet
+            name: ''
+            version: v1
+          - kind: Pod
+            name: ''
+            version: v1
+        specDescriptors:
+          - description: Number of replicas to deploy
+            displayName: Replicas
+            path: replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: Specify the version of Event Streams to create
+            displayName: Version
+            path: version
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:latest'
+        version: v1beta1
+      - description: >-
+          Used internally to manage Kafka and ZooKeeper.
+
+
+          Documentation: This product is not deployable standalone and it is
+          part of the LICCR already accepted
+        displayName: Kafka
+        kind: Kafka
+        name: kafkas.eventstreams.ibm.com
+        resources:
+          - kind: StatefulSet
+            name: ''
+            version: v1
+          - kind: Deployment
+            name: ''
+            version: v1
+          - kind: ReplicaSet
+            name: ''
+            version: v1
+          - kind: Pod
+            name: ''
+            version: v1
+          - kind: Route
+            name: ''
+            version: route.openshift.io/v1
+          - kind: Service
+            name: ''
+            version: v1
+          - kind: ConfigMap
+            name: ''
+            version: v1
+          - kind: Secret
+            name: ''
+            version: v1
+        version: v1beta2
+      - description: >-
+          Creates an environment for using Kafka Connect to connect external
+          systems to Event Streams.
+
+
+          Documentation: https://ibm.biz/es-docs-connector-setup
+
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Connect
+        kind: KafkaConnect
+        name: kafkaconnects.eventstreams.ibm.com
+        resources:
+          - kind: Service
+            name: ''
+            version: v1
+          - kind: Deployment
+            name: ''
+            version: v1
+          - kind: ReplicaSet
+            name: ''
+            version: v1
+          - kind: Pod
+            name: ''
+            version: v1
+        specDescriptors:
+          - description: Address of the Kafka cluster to connect to
+            displayName: Bootstrap server
+            path: bootstrapServers
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Authentication configuration for connecting to the Kafka cluster
+            displayName: Authentication
+            path: authentication
+          - description: Authentication type being used by the Kafka listener to connect to
+            displayName: Type
+            path: authentication.type
+          - description: Username to use to connect to the Kafka cluster
+            displayName: Username
+            path: authentication.username
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:scram-sha-512
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Password to use to connect to the Kafka cluster
+            displayName: Password
+            path: authentication.passwordSecret
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:scram-sha-512
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Secret containing the password
+            displayName: Secret
+            path: authentication.passwordSecret.secretName
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:scram-sha-512
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: >-
+              The name of the key in the Secret under which the password is
+              stored.
+            displayName: Secret key name
+            path: authentication.passwordSecret.password
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:scram-sha-512
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Certificate to use to connect to the Kafka cluster
+            displayName: Certificate
+            path: authentication.certificateAndKey
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:tls
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Secret containing the certificate
+            displayName: Secret
+            path: authentication.certificateAndKey.secretName
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:tls
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: The name of the private key in the Secret.
+            displayName: Private key name
+            path: authentication.certificateAndKey.key
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:tls
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: The name of the file certificate in the Secret.
+            displayName: Certificate name
+            path: authentication.certificateAndKey.certificate
+            x-descriptors:
+              - >-
+                urn:alm:descriptor:com.tectonic.ui:fieldDependency:authentication.type:tls
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Kafka cluster CA certificate
+            displayName: Trusted certificate
+            path: 'tls.trustedCertificates[0]'
+          - description: Secret containing the Kafka cluster CA certificate
+            displayName: Secret
+            path: 'tls.trustedCertificates[0].secretName'
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: >-
+              Name of the field in the secret containing the cluster CA
+              certificate
+            displayName: Secret key name
+            path: 'tls.trustedCertificates[0].certificate'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Desired number of Kafka Connect pods
+            displayName: Replicas
+            path: replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: >-
+              Limits describes the minimum/maximum amount of compute resources
+              required/allowed
+            displayName: Resource requirements
+            path: resources
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:resourceRequirements'
+          - description: Specify the version of Kafka to use
+            displayName: Kafka version
+            path: version
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:3.0.1'
+          - description: Pull secret to use for the Kafka Connect pod
+            displayName: Image pull secrets
+            path: 'template.pod.imagePullSecrets[0].name'
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: The pod's affinity rules.
+            displayName: Affinity (see YAML view)
+            path: affinity
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              OAuth Client ID which the Kafka client can use to authenticate
+              against the OAuth server and use the token endpoint URI.
+            displayName: Authentication clientId (see YAML view)
+            path: authentication.clientId
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The image of the init container used for initializing the
+              `client.rack`.
+            displayName: ClientRackInitImage (see YAML view)
+            path: clientRackInitImage
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The Kafka Connect configuration. Properties with the following
+              prefixes cannot be set: ssl., sasl., security., listeners,
+              plugin.path, rest., bootstrap.servers,
+              consumer.interceptor.classes, producer.interceptor.classes (with
+              the exception of: ssl.endpoint.identification.algorithm,
+              ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
+            displayName: Config (see YAML view)
+            path: config
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Pass data from Secrets or ConfigMaps to the Kafka Connect pods and
+              use them to configure connectors.
+            displayName: External Configuration (see YAML view)
+            path: externalConfiguration
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The docker image for the pods.
+            displayName: Image (see YAML view)
+            path: image
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: JVM Options for pods.
+            displayName: Jvm Options (see YAML view)
+            path: jvmOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod liveness checking.
+            displayName: Liveness Probe (see YAML view)
+            path: livenessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Logging configuration for Kafka Connect.
+            displayName: Logging (see YAML view)
+            path: logging
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configuration of the node label which will be used as the
+              client.rack consumer configuration.
+            displayName: Rack (see YAML view)
+            path: rack
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod readiness checking.
+            displayName: Readiness Probe (see YAML view)
+            path: readinessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's tolerations.
+            displayName: Tolerations (see YAML view)
+            path: tolerations
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The configuration of tracing in Kafka Connect.
+            displayName: Tracing (see YAML view)
+            path: tracing
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the access token which was
+              obtained from the authorization server.
+            displayName: Authentiaction - accessToken (see YAML view)
+            path: authentication.accessToken
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configure whether access token should be treated as JWT. This
+              should be set to `false` if the authorization server returns
+              opaque tokens. Defaults to `true`.
+            displayName: Authentication - accessTokenIsJwt (see YAML view)
+            path: authentication.accessTokenIsJwt
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Authorization server token endpoint URI.
+            displayName: Authentication - tokenEndpointUri (see YAML view)
+            path: authentication.tokenEndpointUri
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Set or limit time-to-live of the access tokens to the specified
+              number of seconds. This should be set if the authorization server
+              returns opaque tokens.
+            displayName: Authentication - maxTokenExpirySeconds (see YAML view)
+            path: authentication.maxTokenExpirySeconds
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Enable or disable TLS hostname verification. Default value is
+              `false`.
+            displayName: Authentication - disableTlsHostnameVerification (see YAML view)
+            path: authentication.disableTlsHostnameVerification
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              OAuth scope to use when authenticating against the authorization
+              server. Some authorization servers require this to be set. The
+              possible values depend on how authorization server is configured.
+              By default `scope` is not specified when doing the token endpoint
+              request.
+            displayName: Authentication - scope (see YAML view)
+            path: authentication.scope
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Trusted certificates for TLS connection to the OAuth server.
+            displayName: Authentication - tlsTrustedCertificates (see YAML view)
+            path: authentication.tlsTrustedCertificates
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              OAuth Client ID which the Kafka client can use to authenticate
+              against the OAuth server and use the token endpoint URI.
+            displayName: Authentication - clientID (see YAML view)
+            path: authentication.clientId
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the OAuth client secret which
+              the Kafka client can use to authenticate against the OAuth server
+              and use the token endpoint URI.
+            displayName: Authentication - clientSecret (see YAML view)
+            path: authentication.clientSecret
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the refresh token which can
+              be used to obtain access token from the authorization server.
+            displayName: Authentication - refreshToken (see YAML view)
+            path: authentication.refreshToken
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Template for Kafka Connect API `Service`.
+            displayName: Template - apiService (see YAML view)
+            path: template.apiService
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Template for the Kafka Connect container.
+            displayName: Template - connectContainer (see YAML view)
+            path: template.connectContainer
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Template for the Kafka init container.
+            displayName: Template - initContainer (see YAML view)
+            path: template.initContainer
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Template for Kafka Connect `PodDisruptionBudget`.
+            displayName: Template - podDisruptionCudget (see YAML view)
+            path: template.podDisruptionBudget
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: HIDDEN FIELDS
+            displayName: HIDDEN FIELDS - Kafka Connect template (see YAML view)
+            path: template.pod.affinity
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The name of the priority class used to assign priority to the
+              pods. For more information about priority classes, see
+              {K8sPriorityClass}.
+            displayName: Template - pod priorityClassName (see YAML view)
+            path: template.pod.priorityClassName
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The name of the scheduler used to dispatch this `Pod`. If not
+              specified, the default scheduler will be used.
+            displayName: Template - pod schedulerName (see YAML view)
+            path: template.pod.schedulerName
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Security context for the container.
+            displayName: Template - pod securityContext (see YAML view)
+            path: template.pod.securityContext
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The grace period is the duration in seconds after the processes
+              running in the pod are sent a termination signal, and the time
+              when the processes are forcibly halted with a kill signal. Set
+              this value to longer than the expected cleanup time for your
+              process. Value must be a non-negative integer. A zero value
+              indicates delete immediately. You might need to increase the grace
+              period for very large Kafka clusters, so that the Kafka brokers
+              have enough time to transfer their work to another broker before
+              they are terminated. Defaults to 30 seconds.
+            displayName: Template - pod terminationGracePeriodSeconds (see YAML view)
+            path: template.pod.terminationGracePeriodSeconds
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's tolerations.
+            displayName: Template - pod tolerations (see YAML view)
+            path: template.pod.tolerations
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+        version: v1beta2
+      - description: >-
+          Used internally to manage Kafka and ZooKeeper
+
+
+          Documentation: This product is not deployable standalone and it is
+          part of the LICCR already accepted
+        displayName: Strimzi Pod Set
+        kind: StrimziPodSet
+        name: strimzipodsets.core.eventstreams.ibm.com
+        resources:
+          - kind: Pod
+            name: ''
+            version: v1
+        version: v1beta2
+      - description: |-
+          Represents a Kafka topic.
+
+          Documentation: https://ibm.biz/es-docs-intro
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Topic
+        kind: KafkaTopic
+        name: kafkatopics.eventstreams.ibm.com
+        specDescriptors:
+          - description: Number of topic partitions to create
+            displayName: Partitions
+            path: partitions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: Topic replication factor
+            displayName: Replicas
+            path: replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: The topic configuration.
+            displayName: Topic config (see YAML view)
+            path: config
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The name of the topic. When absent this will default to the
+              metadata.name of the topic. It is recommended to not set this
+              unless the topic name is not a valid Kubernetes resource name.
+            displayName: Topic name (see YAML view)
+            path: topicName
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+        version: v1beta2
+      - description: >-
+          Identifies an application with permissions for accessing Kafka and the
+          schema registry.
+
+
+          Documentation: https://ibm.biz/es-docs-access
+
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka User
+        kind: KafkaUser
+        name: kafkausers.eventstreams.ibm.com
+        resources:
+          - kind: Secret
+            name: ''
+            version: v1
+        specDescriptors:
+          - description: >-
+              Quotas on requests to control the broker resources used by
+              clients. Network bandwidth and request rate quotas can be
+              enforced.Kafka documentation for Kafka User quotas can be found at
+              http://kafka.apache.org/documentation/#design_quotas.
+            displayName: Kafka User - quotas (see YAML view)
+            path: quotas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Template to specify how Kafka User `Secrets` are generated.
+            displayName: Template
+            path: template
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+        version: v1beta2
+      - description: >-
+          Provide a REST API for integrating HTTP based client applications with
+          a Kafka cluster.
+
+
+          Documentation: https://ibm.biz/es-docs-config
+
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Bridge
+        kind: KafkaBridge
+        name: kafkabridges.eventstreams.ibm.com
+        resources:
+          - kind: Pod
+            name: ''
+            version: v1
+          - kind: Service
+            name: ''
+            version: v1
+        version: v1beta2
+      - description: |-
+          Represents a Kafka Connect source or sink connector.
+
+          Documentation: https://ibm.biz/es-docs-connector-setup
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Connector
+        kind: KafkaConnector
+        name: kafkaconnectors.eventstreams.ibm.com
+        version: v1beta2
+      - description: >-
+          Enables geo-replication of data between Event Streams clusters, or
+          with other Kafka clusters.
+
+
+          Documentation: https://ibm.biz/es-docs-georep-config
+
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Mirror Maker 2
+        kind: KafkaMirrorMaker2
+        name: kafkamirrormaker2s.eventstreams.ibm.com
+        resources:
+          - kind: Service
+            name: ''
+            version: v1
+          - kind: Deployment
+            name: ''
+            version: v1
+          - kind: ReplicaSet
+            name: ''
+            version: v1
+          - kind: Pod
+            name: ''
+            version: v1
+        specDescriptors:
+          - description: Specify the version of Kafka to use
+            displayName: Kafka version
+            path: version
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:select:3.0.1'
+          - description: >-
+              The cluster alias used for Kafka Connect. The alias must match a
+              cluster in the list at spec.clusters
+            displayName: Kafka Connect cluster
+            path: connectCluster
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Number of replicas to deploy
+            displayName: Replicas
+            path: replicas
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:podCount'
+          - description: >-
+              Limits describes the minimum/maximum amount of compute resources
+              required/allowed
+            displayName: Resource requirements
+            path: resources
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:resourceRequirements'
+          - description: List of Kafka clusters to connect using Mirror Maker 2
+            displayName: Kafka Connect clusters
+            path: clusters
+          - description: Alias used to reference this Kafka cluster
+            displayName: Alias
+            path: 'clusters[0].alias'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Address for connecting to the Kafka cluster
+            displayName: Bootstrap server
+            path: 'clusters[0].bootstrapServers'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Authentication configuration for connecting to the Kafka cluster
+            displayName: Authentication
+            path: 'clusters[0].authentication'
+          - description: Authentication type being used by the Kafka listener to connect to
+            displayName: Type
+            path: 'clusters[0].authentication.type'
+          - description: Username to use to connect to the Kafka cluster
+            displayName: Username
+            path: 'clusters[0].authentication.username'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Password to use to connect to the Kafka cluster
+            displayName: Password
+            path: 'clusters[0].authentication.passwordSecret'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Secret containing the password
+            displayName: Secret
+            path: 'clusters[0].authentication.passwordSecret.secretName'
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: >-
+              The name of the key in the Secret under which the password is
+              stored.
+            displayName: Secret key name
+            path: 'clusters[0].authentication.passwordSecret.password'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Certificate to use to connect to the Kafka cluster
+            displayName: Certificate
+            path: 'clusters[0].authentication.certificateAndKey'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Secret containing the certificate
+            displayName: Secret
+            path: 'clusters[0].authentication.certificateAndKey.secretName'
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: The name of the private key in the Secret.
+            displayName: Private key name
+            path: 'clusters[0].authentication.certificateAndKey.key'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: The name of the file certificate in the Secret.
+            displayName: Certificate name
+            path: 'clusters[0].authentication.certificateAndKey.certificate'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Kafka cluster CA certificate
+            displayName: Trusted certificate
+            path: 'clusters[0].tls.trustedCertificates[0]'
+          - description: Secret containing the Kafka cluster CA certificate
+            displayName: Secret
+            path: 'clusters[0].tls.trustedCertificates[0].secretName'
+            x-descriptors:
+              - 'urn:alm:descriptor:io.kubernetes:Secret'
+          - description: >-
+              Name of the field in the secret containing the cluster CA
+              certificate
+            displayName: Secret key name
+            path: 'clusters[0].tls.trustedCertificates[0].certificate'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: Configuration of the Mirror Maker 2 connectors
+            displayName: Mirrors
+            path: mirrors
+          - description: >-
+              The alias of the source cluster used by MirrorMaker 2. The alias
+              must match a cluster in spec.clusters.
+            displayName: Source cluster
+            path: 'mirrors[0].sourceCluster'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: >-
+              The alias of the target cluster used by MirrorMaker 2. The alias
+              must match a cluster in spec.clusters.
+            displayName: Target cluster
+            path: 'mirrors[0].targetCluster'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: A regular expression matching the topics to be mirrored
+            displayName: Topics pattern
+            path: 'mirrors[0].topicsPattern'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: A regular expression matching the topics to exclude from mirroring
+            displayName: Topics blacklist pattern
+            path: 'mirrors[0].topicsBlacklistPattern'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: A regular expression matching the consumer groups to be mirrored
+            displayName: Groups pattern
+            path: 'mirrors[0].groupsPattern'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: >-
+              A regular expression matching the consumer groups to exclude from
+              mirroring
+            displayName: Groups blacklist pattern
+            path: 'mirrors[0].groupsBlacklistPattern'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - description: The specification of the Kafka MirrorMaker 2.0 source connector.
+            displayName: Mirror - sourceConnector (see YAML view)
+            path: 'mirrors[0].sourceConnector'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The specification of the Kafka MirrorMaker 2.0 heartbeat
+              connector.
+            displayName: Mirror - heartbeatConnector (see YAML view)
+            path: 'mirrors[0].heartbeatConnector'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              The specification of the Kafka MirrorMaker 2.0 checkpoint
+              connector.
+            displayName: Mirror - checkpointConnector (see YAML view)
+            path: 'mirrors[0].checkpointConnector'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's affinity rules.
+            displayName: Affinity (see YAML view)
+            path: affinity
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Pass data from Secrets or ConfigMaps to the Kafka Connect pods and
+              use them to configure connectors.
+            displayName: External Configuration (see YAML view)
+            path: externalConfiguration
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The docker image for the pods.
+            displayName: Image (see YAML view)
+            path: image
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: JVM Options for pods.
+            displayName: JVM Options (see YAML view)
+            path: jvmOptions
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod liveness checking.
+            displayName: Liveness Probe (see YAML view)
+            path: livenessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Logging configuration for Kafka Connect.
+            displayName: Logging (see YAML view)
+            path: logging
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Pod readiness checking.
+            displayName: Readiness Probe (see YAML view)
+            path: readinessProbe
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The pod's tolerations.
+            displayName: Tolerations (see YAML view)
+            path: tolerations
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: The configuration of tracing in Kafka Connect.
+            displayName: Tracing (see YAML view)
+            path: tracing
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              OAuth Client ID which the Kafka client can use to authenticate
+              against the OAuth server and use the token endpoint URI.
+            displayName: Clusters - authentication clientId (see YAML view)
+            path: 'clusters[0].authentication.clientId'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Enable or disable TLS hostname verification. Default value is
+              `false`.
+            displayName: >-
+              Clusters - authentication disableTlsHostnameVerification (see YAML
+              view)
+            path: 'clusters[0].authentication.disableTlsHostnameVerification'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Configure whether access token should be treated as JWT. This
+              should be set to `false` if the authorization server returns
+              opaque tokens. Defaults to `true`.
+            displayName: Clusters - authentication accessTokenIsJwt (see YAML view)
+            path: 'clusters[0].authentication.accessTokenIsJwt'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              OAuth scope to use when authenticating against the authorization
+              server. Some authorization servers require this to be set. The
+              possible values depend on how authorization server is configured.
+              By default `scope` is not specified when doing the token endpoint
+              request.
+            displayName: Clusters - authentication scope (see YAML view)
+            path: 'clusters[0].authentication.scope'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the access token which was
+              obtained from the authorization server.
+            displayName: Clusters - authenitcation accessToken (see YAML view)
+            path: 'clusters[0].authentication.accessToken'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Set or limit time-to-live of the access tokens to the specified
+              number of seconds. This should be set if the authorization server
+              returns opaque tokens.
+            displayName: Clusters - authentication maxTokenExpirySeconds (see YAML view)
+            path: 'clusters[0].authentication.maxTokenExpirySeconds'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Trusted certificates for TLS connection to the OAuth server.
+            displayName: Clusters - authentication tlsTrustedCertificates (see YAML view)
+            path: 'clusters[0].authentication.tlsTrustedCertificates'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the OAuth client secret which
+              the Kafka client can use to authenticate against the OAuth server
+              and use the token endpoint URI.
+            displayName: Clusters - authentication clientSecret (see YAML view)
+            path: 'clusters[0].authentication.clientSecret'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Link to Kubernetes Secret containing the refresh token which can
+              be used to obtain access token from the authorization server.
+            displayName: Clusters - authentication refreshToken (see YAML view)
+            path: 'clusters[0].authentication.refreshToken'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: Authorization server token endpoint URI.
+            displayName: Clusters - authentication tokenEndpointUri (see YAML view)
+            path: 'clusters[0].authentication.tokenEndpointUri'
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+          - description: >-
+              Template for Kafka Connect and Kafka Connect S2I resources. The
+              template allows users to specify how the `Deployment`, `Pods` and
+              `Service` are generated.
+            displayName: Template (see YAML view)
+            path: template
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:hidden'
+        version: v1beta2
+      - description: |-
+          Used to define Kafka rebalance goals for Cruise Control to carry out.
+
+          Documentation: https://ibm.biz/es-docs-cruise-control
+
+          License: https://ibm.biz/es-license
+        displayName: Kafka Rebalance
+        kind: KafkaRebalance
+        name: kafkarebalances.eventstreams.ibm.com
+        version: v1beta2
+  relatedImages:
+    - image: >-
+        icr.io/cpopen/ibm-eventstreams-operator@sha256:4b8acfbc027912bc8e06b7c0e361df848977ea0352bb206e8922ca21e447a33d
+      name: eventstreams-cluster-operator
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-apicurio-registry-v24@sha256:1f128f6b767c6c693b26074632a2489cac2283bbe8d888c6ce759db8eb053087
+      name: cp/ibm-eventstreams-apicurio-registry-v24
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-admin@sha256:27569a821febe34bfb21be09079a8ca099fe5d56a2a60c0a36b1d64cc230584c
+      name: cp/ibm-eventstreams-admin
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-jmxtrans@sha256:2b19653be0b77be92e779968aabec6b64a587bbb63cf34e78f545b231d3ce9b4
+      name: cp/ibm-eventstreams-jmxtrans
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-apicurio-registry-v2@sha256:2bf13e3e5540b6797057e30c32a5fcffff1dcf25fa1eac13fc730eda9fbc0c73
+      name: cp/ibm-eventstreams-apicurio-registry-v2
+    - image: >-
+        icr.io/cpopen/ibm-eventstreams-operator@sha256:4b8acfbc027912bc8e06b7c0e361df848977ea0352bb206e8922ca21e447a33d
+      name: cpopen/ibm-eventstreams-operator
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-metrics-collector@sha256:63a163b513b8ad7dc8e35a909492e966ef77e3617f2a0e93783495b8c963d9ee
+      name: cp/ibm-eventstreams-metrics-collector
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-session-store@sha256:881a6f448665b6391600b9e0213d243494973bc804c39971b0d555e782efc2b4
+      name: cp/ibm-eventstreams-session-store
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-kafka-proxy@sha256:935a575bf2dba762c6140e8c4d8b8dcce2ad41c9f67c719ebdc690e9823d5fa9
+      name: cp/ibm-eventstreams-kafka-proxy
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-schema-proxy@sha256:9ba6272132153dcd46ef3eda090064cce19dfe904a362b3541de005cdf4b5113
+      name: cp/ibm-eventstreams-schema-proxy
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-admin-ui@sha256:a90ee43353ffa1afb910444c239401bbdb50f8e0835bcd0e7761ecb4180c612c
+      name: cp/ibm-eventstreams-admin-ui
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-rest-producer@sha256:b775b311f38aceae376721c5a20887a7e0e425e4a2d7df57ef6e3950762c08f9
+      name: cp/ibm-eventstreams-rest-producer
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-kafka@sha256:d46701abdd0073a071a81a531c8a7dac63087984b53cd25c42528d67b69356da
+      name: cp/ibm-eventstreams-kafka
+    - image: >-
+        cp.icr.io/cp/ibm-eventstreams-kafka-bridge@sha256:dca53027ab6622e268aaff756765367a327de75688f6337db4e4eb78053aa50a
+      name: cp/ibm-eventstreams-kafka-bridge
+    - image: >-
+        icr.io/cpopen/ibm-eventstreams-operator-init@sha256:fd79444cc6b9f5b042a4bf473ec36e4fe210f7f22bc4b8223471a58df980557d
+      name: cpopen/ibm-eventstreams-operator-init
+  cleanup:
+    enabled: false
+  apiservicedefinitions: {}
+  keywords:
+    - kafka
+    - apachekafka
+    - messaging
+    - integration
+    - streams
+    - cloud pak
+    - cloud pak for integration
+    - cp4i
+  displayName: IBM Event Streams
+  provider:
+    name: IBM
+  installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: true
+      type: SingleNamespace
+    - supported: true
+      type: MultiNamespace
+    - supported: true
+      type: AllNamespaces
+  version: 3.2.0
+  icon:
+    - base64data: >-
+        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
+      mediatype: image/png
+  links:
+    - name: Website
+      url: 'https://www.ibm.com/cloud/event-streams'
+    - name: Documentation
+      url: 'https://ibm.github.io/event-streams'
+    - name: Support
+      url: 'https://ibm.github.io/event-streams/support'
+    - name: Event Streams Documentation
+      url: 'https://ibm.biz/es-docs-config'
+    - name: KafkaUser Documentation
+      url: 'https://ibm.biz/es-docs-access'
+    - name: KafkaTopic Documentation
+      url: 'https://ibm.biz/es-docs-intro'
+    - name: KafkaConnect Documentation
+      url: 'https://ibm.biz/es-docs-connector-setup'
+    - name: KafkaConnector Documentation
+      url: 'https://ibm.biz/es-docs-connector-setup'
+    - name: EventStreamsGeoReplicator Documentation
+      url: 'https://ibm.biz/es-docs-georep-config'
+    - name: KafkaMirrorMaker2 Documentation
+      url: 'https://ibm.biz/es-docs-georep-config'
+    - name: KafkaRebalance Documentation
+      url: 'https://ibm.biz/es-docs-cruise-control'
+  install:
+    spec:
+      clusterPermissions:
+        - rules:
+            - apiGroups:
+                - ''
+              resources:
+                - nodes
+              verbs:
+                - list
+                - get
+            - apiGroups:
+                - rbac.authorization.k8s.io
+              resources:
+                - clusterroles
+                - clusterrolebindings
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - admissionregistration.k8s.io
+              resources:
+                - validatingwebhookconfigurations
+              verbs:
+                - list
+                - watch
+                - get
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - console.openshift.io
+              resources:
+                - consoleyamlsamples
+              verbs:
+                - get
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - ''
+              resourceNames:
+                - ibm-common-services-status
+              resources:
+                - configmaps
+              verbs:
+                - get
+            - apiGroups:
+                - apiextensions.k8s.io
+              resourceNames:
+                - cp4iservicesbindings.cp4i.ibm.com
+                - eventstreams.eventstreams.ibm.com
+                - operandrequests.operator.ibm.com
+              resources:
+                - customresourcedefinitions
+              verbs:
+                - get
+            - apiGroups:
+                - monitoring.coreos.com
+              resources:
+                - servicemonitors
+              verbs:
+                - list
+                - watch
+                - get
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - coordination.k8s.io
+              resources:
+                - leases
+              verbs:
+                - create
+            - apiGroups:
+                - coordination.k8s.io
+              resourceNames:
+                - strimzi-cluster-operator
+              resources:
+                - leases
+              verbs:
+                - get
+                - list
+                - watch
+                - delete
+                - patch
+                - update
+          serviceAccountName: eventstreams-cluster-operator
+      deployments:
+        - name: eventstreams-cluster-operator
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                eventstreams.ibm.com/kind: cluster-operator
+                name: eventstreams-cluster-operator
+            strategy:
+              type: Recreate
+            template:
+              metadata:
+                annotations:
+                  productChargedContainers: ''
+                  productID: 682b6db3fed247a098d85da5ab905b46
+                  productMetric: FREE
+                  productName: IBM Event Automation
+                  productVersion: 11.2.0
+                  prometheus.io/port: '8080'
+                  prometheus.io/scheme: http
+                  prometheus.io/scrape: 'true'
+                creationTimestamp: null
+                labels:
+                  app: eventstreams
+                  app.kubernetes.io/instance: eventstreams-operator
+                  app.kubernetes.io/managed-by: olm
+                  app.kubernetes.io/name: eventstreams-operator
+                  eventstreams.ibm.com/kind: cluster-operator
+                  name: eventstreams-cluster-operator
+              spec:
+                affinity:
+                  nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                      nodeSelectorTerms:
+                        - matchExpressions:
+                            - key: kubernetes.io/arch
+                              operator: In
+                              values:
+                                - amd64
+                                - s390x
+                                - ppc64le
+                  podAntiAffinity:
+                    preferredDuringSchedulingIgnoredDuringExecution:
+                      - podAffinityTerm:
+                          labelSelector:
+                            matchExpressions:
+                              - key: eventstreams.ibm.com/kind
+                                operator: In
+                                values:
+                                  - cluster-operator
+                          topologyKey: kubernetes.io/hostname
+                        weight: 10
+                containers:
+                  - resources:
+                      limits:
+                        cpu: '1'
+                        memory: 1Gi
+                      requests:
+                        cpu: 200m
+                        memory: 1Gi
+                    readinessProbe:
+                      failureThreshold: 3
+                      httpGet:
+                        path: /ready
+                        port: 8080
+                      initialDelaySeconds: 10
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 5
+                    name: eventstreams-cluster-operator
+                    livenessProbe:
+                      failureThreshold: 3
+                      httpGet:
+                        path: /healthy
+                        port: 8080
+                      initialDelaySeconds: 10
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 5
+                    env:
+                      - name: WATCHED_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: 'metadata.annotations[''olm.targetNamespaces'']'
+                      - name: EVENTSTREAMS_OPERATOR_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.namespace
+                      - name: STRIMZI_FEATURE_GATES
+                        value: '-UseKRaft'
+                      - name: EVENTSTREAMS_IMAGE_PULL_POLICY
+                        value: IfNotPresent
+                      - name: EVENTSTREAMS_FULL_RECONCILIATION_INTERVAL_MS
+                        value: '120000'
+                      - name: EVENTSTREAMS_OPERATION_TIMEOUT_MS
+                        value: '300000'
+                      - name: EVENTSTREAMS_IMAGE_PULL_SECRETS
+                        value: ibm-entitlement-key
+                      - name: EVENTSTREAMS_LOG_LEVEL
+                        value: INFO
+                      - name: POD_NAME
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.name
+                      - name: JAVA_OPTS
+                        value: >-
+                          -XX:+UseContainerSupport -Xdump:what
+                          -Xdump:java+system+snap:events=user
+                          -Xdump:directory=/tmp/dumps
+                          -XX:+HeapDumpOnOutOfMemoryError
+                      - name: EVENTSTREAMS_DEFAULT_KAFKA_BRIDGE_IMAGE
+                        value: >-
+                          cp.icr.io/cp/ibm-eventstreams-kafka-bridge@sha256:dca53027ab6622e268aaff756765367a327de75688f6337db4e4eb78053aa50a
+                      - name: STRIMZI_LEADER_ELECTION_ENABLED
+                        value: 'true'
+                      - name: STRIMZI_LEADER_ELECTION_LEASE_NAME
+                        value: strimzi-cluster-operator
+                      - name: STRIMZI_POD_SET_RECONCILIATION_ONLY
+                        value: 'false'
+                      - name: STRIMZI_LEADER_ELECTION_LEASE_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.namespace
+                      - name: STRIMZI_LEADER_ELECTION_IDENTITY
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.name
+                    securityContext:
+                      allowPrivilegeEscalation: false
+                      capabilities:
+                        drop:
+                          - ALL
+                          - MKNOD
+                      privileged: false
+                      readOnlyRootFilesystem: false
+                      runAsNonRoot: true
+                    ports:
+                      - containerPort: 8080
+                        name: metrics
+                        protocol: TCP
+                    imagePullPolicy: IfNotPresent
+                    volumeMounts:
+                      - mountPath: /opt/images
+                        name: images
+                      - mountPath: /etc/eventstreams
+                        name: eventstreams
+                    image: >-
+                      icr.io/cpopen/ibm-eventstreams-operator@sha256:4b8acfbc027912bc8e06b7c0e361df848977ea0352bb206e8922ca21e447a33d
+                    args:
+                      - /opt/strimzi/bin/eventstreams_cluster_operator_run.sh
+                initContainers:
+                  - env:
+                      - name: EVENTSTREAMS_VERSION
+                        value: 11.2.0
+                      - name: IS_OPENSHIFT
+                        value: 'true'
+                      - name: EVENTSTREAMS_OPERATOR_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.namespace
+                      - name: WATCHED_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: 'metadata.annotations[''olm.targetNamespaces'']'
+                    image: >-
+                      icr.io/cpopen/ibm-eventstreams-operator-init@sha256:fd79444cc6b9f5b042a4bf473ec36e4fe210f7f22bc4b8223471a58df980557d
+                    imagePullPolicy: IfNotPresent
+                    name: init
+                    resources:
+                      limits:
+                        cpu: '1'
+                        memory: 256Mi
+                      requests:
+                        cpu: 200m
+                        memory: 256Mi
+                    securityContext:
+                      allowPrivilegeEscalation: false
+                      capabilities:
+                        drop:
+                          - ALL
+                      privileged: false
+                      readOnlyRootFilesystem: false
+                      runAsNonRoot: true
+                securityContext:
+                  runAsNonRoot: true
+                serviceAccountName: eventstreams-cluster-operator
+                volumes:
+                  - configMap:
+                      name: eventstreams-images
+                    name: images
+                  - name: eventstreams
+                    secret:
+                      optional: true
+                      secretName: eventstreams-cluster-operator
+      permissions:
+        - rules:
+            - apiGroups:
+                - rbac.authorization.k8s.io
+              resources:
+                - rolebindings
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - rbac.authorization.k8s.io
+              resources:
+                - roles
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - ''
+              resources:
+                - pods
+                - serviceaccounts
+                - configmaps
+                - services
+                - endpoints
+                - secrets
+                - persistentvolumeclaims
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - apps
+              resources:
+                - deployments
+                - deployments/scale
+                - deployments/status
+                - statefulsets
+                - replicasets
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - ''
+                - events.k8s.io
+              resources:
+                - events
+              verbs:
+                - create
+            - apiGroups:
+                - build.openshift.io
+              resources:
+                - buildconfigs
+                - buildconfigs/instantiate
+                - builds
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - networking.k8s.io
+              resources:
+                - networkpolicies
+                - ingresses
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - route.openshift.io
+              resources:
+                - routes
+                - routes/custom-host
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - image.openshift.io
+              resources:
+                - imagestreams
+              verbs:
+                - get
+            - apiGroups:
+                - policy
+              resources:
+                - poddisruptionbudgets
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - ''
+              resources:
+                - namespaces
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - ''
+              resources:
+                - nodes
+              verbs:
+                - list
+                - get
+            - apiGroups:
+                - monitoringcontroller.cloud.ibm.com
+              resources:
+                - monitoringdashboards
+              verbs:
+                - create
+                - get
+                - patch
+                - delete
+            - apiGroups:
+                - ''
+              resources:
+                - pods
+              verbs:
+                - patch
+            - apiGroups:
+                - monitoring.coreos.com
+              resources:
+                - servicemonitors
+              verbs:
+                - get
+                - create
+                - patch
+            - apiGroups:
+                - eventstreams.ibm.com
+              resources:
+                - eventstreams
+                - eventstreams/status
+                - eventstreamsgeoreplicators
+                - eventstreamsgeoreplicators/status
+                - kafkatopics
+                - kafkatopics/status
+                - kafkausers
+                - kafkausers/status
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - eventstreams.ibm.com
+              resources:
+                - kafkas
+                - kafkas/status
+                - kafkaconnects
+                - kafkaconnects/status
+                - kafkaconnectors
+                - kafkaconnectors/status
+                - kafkamirrormakers
+                - kafkamirrormakers/status
+                - kafkabridges
+                - kafkabridges/status
+                - kafkamirrormaker2s
+                - kafkamirrormaker2s/status
+                - kafkarebalances
+                - kafkarebalances/status
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - core.eventstreams.ibm.com
+              resources:
+                - strimzipodsets
+                - strimzipodsets/status
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - delete
+                - patch
+                - update
+            - apiGroups:
+                - oidc.security.ibm.com
+              resources:
+                - clients
+              verbs:
+                - get
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - cp4i.ibm.com
+              resources:
+                - cp4iservicesbindings
+              verbs:
+                - get
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - operator.ibm.com
+              resources:
+                - operandrequests
+              verbs:
+                - get
+                - list
+                - create
+                - patch
+                - delete
+            - apiGroups:
+                - operators.coreos.com
+              resources:
+                - clusterserviceversions
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - batch
+              resources:
+                - jobs
+              verbs:
+                - list
+                - get
+                - create
+                - patch
+                - delete
+          serviceAccountName: eventstreams-cluster-operator
+    strategy: deployment
+  maintainers:
+    - email: eventstreams@uk.ibm.com
+      name: IBM
+  description: |-
+    # Name
+      IBM Event Streams
+
+    ## Introduction
+      Built on the open-source [Apache Kafka](https://kafka.apache.org), IBM Event Streams is a high-throughput, fault-tolerant, event streaming platform that helps you build intelligent, responsive, event-driven applications
+
+    ## Details
+      IBM Event Streams features include:
+      - An Apache Kafka deployment that provides a highly-scalable and fault-tolerant messaging platform.
+      - An administrative UI to help with common Kafka tasks.
+      - A comprehensive CLI to enable manual and scripted cluster management.
+      - A range of tools and sample applications to help you get going quickly.
+      - Geo-replication of topics between clusters to enable disaster recovery and scalability.
+      - A REST API for producing messages to Event Streams topics.
+      - A schema registry to support the definition and enforcement of message formats.
+      - Health check information to help resolve issues with your clusters and brokers.
+      - Security with authentication and authorization for users and connecting applications.
+
+    ## Prerequisites
+      Before installing Event Streams, ensure you create a secret called `ibm-entitlement-key` in the namespace where you want to create an instance of IBM Event Streams
+      1. Obtain an entitlement key from https://myibm.ibm.com/products-services/containerlibrary
+      2. Create an image pull secret called `ibm-entitlement-key` by using `cp` as the username, your entitlement key as the password, and `cp.icr.io` as the docker server:
+      `oc create secret docker-registry ibm-entitlement-key --docker-username=cp --docker-password=<your-entitlement-key> --docker-server=cp.icr.io -n <target-namespace>`
+
+      You can use the secret to deploy instances of IBM Event Streams in your target namespace.
+
+    ### Resources Required
+      Event Streams resource requirements depend on several factors. For information about minimum resource requirements, see the [IBM Event Streams documentation](https://ibm.github.io/event-streams/installing/prerequisites/#resource-requirements).
+
+    ### SecurityContextConstraints Requirements
+      Event Streams requires a Security Context Constraint (SCC) to be bound to the target namespace prior to installation.
+      By default, Event Streams uses the default `restricted` SCC that comes with the OpenShift Container Platform.
+      For more information about deployment prerequisites, see the [IBM Event Streams documentation](https://ibm.github.io/event-streams/installing/prerequisites/).
+
+    ## Installing
+      For information about installing IBM Event Streams, see the [documentation](https://ibm.github.io/event-streams).
+
+    ## Configuration
+      IBM Event Streams provides sample configurations to help you get started with deployments. Choose one of the samples suited to your requirements to get started. You can modify the samples, save them, and apply custom configuration settings as well. For more information about the sample configurations and guidance about configuring your instances, see the [IBM Event Streams documentation](https://ibm.github.io/event-streams/installing/configuring/).
+
+    ## Limitations
+      Not applicable.
+
+    *Copyright IBM Corporation 2022. All Rights Reserved.*
+  selector:
+    matchLabels:
+      name: ibm-eventstreams
+  labels:
+    app: eventstreams
+    name: ibm-eventstreams
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+status:
+  cleanup: {}
+  conditions:
+    - lastTransitionTime: '2023-07-31T15:22:49Z'
+      lastUpdateTime: '2023-07-31T15:22:49Z'
+      message: requirements not yet checked
+      phase: Pending
+      reason: RequirementsUnknown
+    - lastTransitionTime: '2023-07-31T15:22:50Z'
+      lastUpdateTime: '2023-07-31T15:22:50Z'
+      message: 'all requirements found, attempting install'
+      phase: InstallReady
+      reason: AllRequirementsMet
+    - lastTransitionTime: '2023-07-31T15:22:53Z'
+      lastUpdateTime: '2023-07-31T15:22:53Z'
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: '2023-07-31T15:22:53Z'
+      lastUpdateTime: '2023-07-31T15:22:55Z'
+      message: >-
+        installing: waiting for deployment eventstreams-cluster-operator to
+        become ready: deployment "eventstreams-cluster-operator" not available:
+        Deployment does not have minimum availability.
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: '2023-07-31T15:24:44Z'
+      lastUpdateTime: '2023-07-31T15:24:44Z'
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: '2023-08-03T06:04:46Z'
+      lastUpdateTime: '2023-08-03T06:04:46Z'
+      message: >-
+        installing: unexpected annotation on deployment. Expected
+        alm-examples:[{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"light-insecure"},"spec":{"version":"latest","license":{"accept":false,"license":"","use":""},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"security":{"internalTls":"NONE"},"strimziOverrides":{"kafka":{"replicas":1,"config":{"inter.broker.protocol.version":"3.4","offsets.topic.replication.factor":1,"transaction.state.log.min.isr":1,"transaction.state.log.replication.factor":1},"listeners":[{"name":"plain","port":9092,"type":"internal","tls":false}],"storage":{"type":"ephemeral"},"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"light-insecure-metrics-config"}}}},"zookeeper":{"replicas":1,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"light-insecure-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":false,"monitoring":false}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"development"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"minimal-prod"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-3-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-6-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":6,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":6,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"50Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-9-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":9,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":9,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"100Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta1","kind":"EventStreamsGeoReplicator","metadata":{"name":"minimal-prod","labels":{"eventstreams.ibm.com/cluster":"minimal-prod"}},"spec":{"version":"latest","replicas":1}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Write"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer-producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"*","patternType":"literal"},"operations":["Write","Read","Create"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read","Alter"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaConnect","metadata":{"name":"non-prod"},"spec":{"template":{"connectContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}},"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+        Event Streams for Non
+        Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-KAFKA-CONNECT-CR>-connect","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+        Cloud Pak for
+        Integration","productCloudpakRatio":"2:1"}}}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","tls":{"trustedCertificates":[{"secretName":"my-cluster-cluster-ca-cert","certificate":"ca.crt"}]},"config":{"group.id":"connect-cluster","offset.storage.topic":"connect-cluster-offsets","config.storage.topic":"connect-cluster-configs","status.storage.topic":"connect-cluster-status"},"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"certificateAndKey":{"certificate":"user.crt","key":"user.key","secretName":"my-bridge"},"type":"tls"},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaMirrorMaker2","metadata":{"name":"non-prod"},"spec":{"template":{"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+        Event Streams for Non
+        Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-MM2-CR>-mirrormaker2","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+        Cloud Pak for
+        Integration","productCloudpakRatio":"2:1"}}}},"connectCluster":"my-cluster-target","clusters":[{"alias":"my-cluster-source","bootstrapServers":"my-cluster-source-kafka-bootstrap:9092"},{"alias":"my-cluster-target","bootstrapServers":"my-cluster-target-kafka-bootstrap:9092","config":{"config.storage.replication.factor":1,"offset.storage.replication.factor":1,"status.storage.replication.factor":1}}],"mirrors":[{"sourceCluster":"my-cluster-source","targetCluster":"my-cluster-target","sourceConnector":{"config":{"replication.factor":1,"offset-syncs.topic.replication.factor":1,"sync.topic.acls.enabled":"false"}},"heartbeatConnector":{"config":{"heartbeats.topic.replication.factor":1}},"checkpointConnector":{"config":{"checkpoints.topic.replication.factor":1}},"topicsPattern":".*","groupsPattern":".*"}],"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"type":"scram-sha-512","username":"my-bridge","passwordSecret":{"secretName":"my-bridge","password":"password"}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"dev-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"min-prod-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}}}}],
+        found
+        alm-examples:[{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"light-insecure"},"spec":{"version":"latest","license":{"accept":false,"license":"","use":""},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"security":{"internalTls":"NONE"},"strimziOverrides":{"kafka":{"replicas":1,"config":{"inter.broker.protocol.version":"3.4","offsets.topic.replication.factor":1,"transaction.state.log.min.isr":1,"transaction.state.log.replication.factor":1},"listeners":[{"name":"plain","port":9092,"type":"internal","tls":false}],"storage":{"type":"ephemeral"},"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"light-insecure-metrics-config"}}}},"zookeeper":{"replicas":1,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"light-insecure-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":false,"monitoring":false}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"development"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"minimal-prod"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-3-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-3-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-6-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":6,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":6,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"50Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-6-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"prod-9-brokers"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":9,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":9,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"resources":{"requests":{"memory":"8096Mi","cpu":"4000m"},"limits":{"memory":"8096Mi","cpu":"4000m"}},"storage":{"type":"persistent-claim","size":"100Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"prod-9-brokers-metrics-config"}}},"storage":{"type":"persistent-claim","size":"10Gi","class":"default"}}},"requestIbmServices":{"iam":true,"monitoring":true}}},{"apiVersion":"eventstreams.ibm.com/v1beta1","kind":"EventStreamsGeoReplicator","metadata":{"name":"minimal-prod","labels":{"eventstreams.ibm.com/cluster":"minimal-prod"}},"spec":{"version":"latest","replicas":1}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"your.topic.name","patternType":"literal"},"operations":["Write"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaUser","metadata":{"name":"consumer-producer","labels":{"eventstreams.ibm.com/cluster":"<cluster-name>"}},"spec":{"authentication":{"type":"scram-sha-512"},"authorization":{"type":"simple","acls":[{"resource":{"type":"topic","name":"*","patternType":"literal"},"operations":["Write","Read","Create"]},{"resource":{"type":"group","name":"*","patternType":"literal"},"operations":["Read"]},{"resource":{"type":"topic","name":"__schema_","patternType":"prefix"},"operations":["Read","Alter"]}]}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaConnect","metadata":{"name":"non-prod"},"spec":{"template":{"connectContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}},"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+        Event Streams for Non
+        Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-KAFKA-CONNECT-CR>-connect","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+        Cloud Pak for
+        Integration","productCloudpakRatio":"2:1"}}}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","tls":{"trustedCertificates":[{"secretName":"my-cluster-cluster-ca-cert","certificate":"ca.crt"}]},"config":{"group.id":"connect-cluster","offset.storage.topic":"connect-cluster-offsets","config.storage.topic":"connect-cluster-configs","status.storage.topic":"connect-cluster-status"},"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"certificateAndKey":{"certificate":"user.crt","key":"user.key","secretName":"my-bridge"},"type":"tls"},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaMirrorMaker2","metadata":{"name":"non-prod"},"spec":{"template":{"pod":{"metadata":{"annotations":{"eventstreams.production.type":"CloudPakForIntegrationNonProduction","productID":"2a79e49111f44ec3acd89608e56138f5","productName":"IBM
+        Event Streams for Non
+        Production","productVersion":"11.2.0","productMetric":"VIRTUAL_PROCESSOR_CORE","productChargedContainers":"<ADD-NAME-OF-MM2-CR>-mirrormaker2","cloudpakId":"c8b82d189e7545f0892db9ef2731b90d","cloudpakName":"IBM
+        Cloud Pak for
+        Integration","productCloudpakRatio":"2:1"}}}},"connectCluster":"my-cluster-target","clusters":[{"alias":"my-cluster-source","bootstrapServers":"my-cluster-source-kafka-bootstrap:9092"},{"alias":"my-cluster-target","bootstrapServers":"my-cluster-target-kafka-bootstrap:9092","config":{"config.storage.replication.factor":1,"offset.storage.replication.factor":1,"status.storage.replication.factor":1}}],"mirrors":[{"sourceCluster":"my-cluster-source","targetCluster":"my-cluster-target","sourceConnector":{"config":{"replication.factor":1,"offset-syncs.topic.replication.factor":1,"sync.topic.acls.enabled":"false"}},"heartbeatConnector":{"config":{"heartbeats.topic.replication.factor":1}},"checkpointConnector":{"config":{"checkpoints.topic.replication.factor":1}},"topicsPattern":".*","groupsPattern":".*"}],"replicas":1,"resources":{"requests":{"cpu":"1000m","memory":"2Gi"},"limits":{"cpu":"2000m","memory":"2Gi"}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"KafkaBridge","metadata":{"name":"my-bridge"},"spec":{"authentication":{"type":"scram-sha-512","username":"my-bridge","passwordSecret":{"secretName":"my-bridge","password":"password"}},"bootstrapServers":"my-cluster-kafka-bootstrap:9093","http":{"port":8080},"replicas":1,"tls":{"trustedCertificates":[{"certificate":"ca.crt","secretName":"my-cluster-cluster-ca-cert"}]},"template":{"bridgeContainer":{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"dev-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"development-metrics-config"}}},"storage":{"type":"ephemeral"}}}}},{"apiVersion":"eventstreams.ibm.com/v1beta2","kind":"EventStreams","metadata":{"annotations":{"eventstreams.ibm.com/apicurio-registry-version":">=2.4"},"name":"min-prod-scram"},"spec":{"version":"latest","license":{"accept":false,"license":"L-YBXJ-ADJNSM","use":"CloudPakForIntegrationProduction"},"adminApi":{},"adminUI":{"authentication":[{"type":"scram-sha-512"}]},"apicurioRegistry":{},"collector":{},"restProducer":{},"strimziOverrides":{"kafka":{"replicas":3,"authorization":{"type":"custom","authorizerClass":"com.ibm.eventstreams.runas.authorizer.RunAsAuthorizer","supportsAdminApi":true},"config":{"inter.broker.protocol.version":"3.4","log.cleaner.threads":6,"num.io.threads":24,"num.network.threads":9,"num.replica.fetchers":3,"offsets.topic.replication.factor":3,"default.replication.factor":3,"min.insync.replicas":2},"listeners":[{"name":"external","port":9094,"type":"route","tls":true,"authentication":{"type":"scram-sha-512"}},{"name":"tls","port":9093,"type":"internal","tls":true,"authentication":{"type":"tls"}}],"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"kafka-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"4Gi","class":"default"}},"zookeeper":{"replicas":3,"metricsConfig":{"type":"jmxPrometheusExporter","valueFrom":{"configMapKeyRef":{"key":"zookeeper-metrics-config.yaml","name":"minimal-prod-metrics-config"}}},"storage":{"type":"persistent-claim","size":"2Gi","class":"default"}}}}}]
+      phase: InstallReady
+      reason: ComponentUnhealthy
+    - lastTransitionTime: '2023-08-03T06:04:47Z'
+      lastUpdateTime: '2023-08-03T06:04:47Z'
+      message: waiting for install components to report healthy
+      phase: Installing
+      reason: InstallSucceeded
+    - lastTransitionTime: '2023-08-03T06:04:47Z'
+      lastUpdateTime: '2023-08-03T06:04:47Z'
+      message: >-
+        installing: waiting for deployment eventstreams-cluster-operator to
+        become ready: deployment "eventstreams-cluster-operator" not available:
+        Deployment does not have minimum availability.
+      phase: Installing
+      reason: InstallWaiting
+    - lastTransitionTime: '2023-08-03T06:06:14Z'
+      lastUpdateTime: '2023-08-03T06:06:14Z'
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+  lastTransitionTime: '2023-08-03T06:06:14Z'
+  lastUpdateTime: '2023-08-03T06:06:14Z'
+  message: install strategy completed with no errors
+  phase: Succeeded
+  reason: InstallSucceeded
+  requirementStatus:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: eventstreams.eventstreams.ibm.com
+      status: Present
+      uuid: f8b177f3-59b5-4114-bbad-8cf4c4d303de
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: eventstreamsgeoreplicators.eventstreams.ibm.com
+      status: Present
+      uuid: 8b1b5b40-2e89-41d2-b5ef-2a3eee4fd857
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkabridges.eventstreams.ibm.com
+      status: Present
+      uuid: 21348ef9-49b0-4c99-b008-d32e6a2865bb
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkaconnectors.eventstreams.ibm.com
+      status: Present
+      uuid: 511e26f2-f817-4767-b655-3aebc57d4aa5
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkaconnects.eventstreams.ibm.com
+      status: Present
+      uuid: 079f31ce-5dd8-4246-8041-88aeb8eade23
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkamirrormaker2s.eventstreams.ibm.com
+      status: Present
+      uuid: cb38de92-cfad-42c5-9012-f7fa796c6368
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkarebalances.eventstreams.ibm.com
+      status: Present
+      uuid: cc575106-30e3-4a9d-bece-1d37c2b6f35a
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkas.eventstreams.ibm.com
+      status: Present
+      uuid: b16dc779-bd0a-4aeb-a492-3ed4f9df8c2b
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkatopics.eventstreams.ibm.com
+      status: Present
+      uuid: 1d431efb-a61b-44bd-a6d1-1cadc097409a
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: kafkausers.eventstreams.ibm.com
+      status: Present
+      uuid: be626391-d5a7-4ef3-ae03-381827764241
+      version: v1
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      message: CRD is present and Established condition is true
+      name: strimzipodsets.core.eventstreams.ibm.com
+      status: Present
+      uuid: b598708d-46cf-40bc-b313-2ad16a1d3c13
+      version: v1
+    - dependents:
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["rolebindings"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["roles"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":[""],"resources":["pods","serviceaccounts","configmaps","services","endpoints","secrets","persistentvolumeclaims"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["apps"],"resources":["deployments","deployments/scale","deployments/status","statefulsets","replicasets"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["create"],"apiGroups":["","events.k8s.io"],"resources":["events"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["build.openshift.io"],"resources":["buildconfigs","buildconfigs/instantiate","builds"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["networking.k8s.io"],"resources":["networkpolicies","ingresses"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["route.openshift.io"],"resources":["routes","routes/custom-host"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get"],"apiGroups":["image.openshift.io"],"resources":["imagestreams"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["policy"],"resources":["poddisruptionbudgets"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list"],"apiGroups":[""],"resources":["namespaces"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["list","get"],"apiGroups":[""],"resources":["nodes"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["create","get","patch","delete"],"apiGroups":["monitoringcontroller.cloud.ibm.com"],"resources":["monitoringdashboards"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["patch"],"apiGroups":[""],"resources":["pods"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","create","patch"],"apiGroups":["monitoring.coreos.com"],"resources":["servicemonitors"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["eventstreams.ibm.com"],"resources":["eventstreams","eventstreams/status","eventstreamsgeoreplicators","eventstreamsgeoreplicators/status","kafkatopics","kafkatopics/status","kafkausers","kafkausers/status"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["eventstreams.ibm.com"],"resources":["kafkas","kafkas/status","kafkaconnects","kafkaconnects/status","kafkaconnectors","kafkaconnectors/status","kafkamirrormakers","kafkamirrormakers/status","kafkabridges","kafkabridges/status","kafkamirrormaker2s","kafkamirrormaker2s/status","kafkarebalances","kafkarebalances/status"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","watch","create","delete","patch","update"],"apiGroups":["core.eventstreams.ibm.com"],"resources":["strimzipodsets","strimzipodsets/status"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","create","patch","delete"],"apiGroups":["oidc.security.ibm.com"],"resources":["clients"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","create","patch","delete"],"apiGroups":["cp4i.ibm.com"],"resources":["cp4iservicesbindings"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list","create","patch","delete"],"apiGroups":["operator.ibm.com"],"resources":["operandrequests"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["get","list"],"apiGroups":["operators.coreos.com"],"resources":["clusterserviceversions"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            namespaced
+            rule:{"verbs":["list","get","create","patch","delete"],"apiGroups":["batch"],"resources":["jobs"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["list","get"],"apiGroups":[""],"resources":["nodes"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["get","list"],"apiGroups":["rbac.authorization.k8s.io"],"resources":["clusterroles","clusterrolebindings"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["list","watch","get","create","patch","delete"],"apiGroups":["admissionregistration.k8s.io"],"resources":["validatingwebhookconfigurations"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["get","create","patch","delete"],"apiGroups":["console.openshift.io"],"resources":["consoleyamlsamples"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["get"],"apiGroups":[""],"resources":["configmaps"],"resourceNames":["ibm-common-services-status"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["get"],"apiGroups":["apiextensions.k8s.io"],"resources":["customresourcedefinitions"],"resourceNames":["cp4iservicesbindings.cp4i.ibm.com","eventstreams.eventstreams.ibm.com","operandrequests.operator.ibm.com"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["list","watch","get","create","patch","delete"],"apiGroups":["monitoring.coreos.com"],"resources":["servicemonitors"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["create"],"apiGroups":["coordination.k8s.io"],"resources":["leases"]}
+          status: Satisfied
+          version: v1
+        - group: rbac.authorization.k8s.io
+          kind: PolicyRule
+          message: >-
+            cluster
+            rule:{"verbs":["get","list","watch","delete","patch","update"],"apiGroups":["coordination.k8s.io"],"resources":["leases"],"resourceNames":["strimzi-cluster-operator"]}
+          status: Satisfied
+          version: v1
+      group: ''
+      kind: ServiceAccount
+      message: ''
+      name: eventstreams-cluster-operator
+      status: Present
+      version: v1
