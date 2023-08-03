@@ -12,7 +12,15 @@ Berikut adalah langkah untuk installasi Kluster Kafka pada CP4I:
 3. Setup kafka cluster yang anda inginkan.
 Pada kasus yang saya inginkan, saya menggunakan **Production 3 Brokers** 
 ![](../images/preparation-35.png)
-4. Setting detail kafka yang diinginkan (pada kasus ini saya biarkan default) dan klik **Create**
+4. Setting detail kafka yang diinginkan
+
+    Konfigurasi bersifat bebas. Namun, perlu diperhatikan karena kita tidak memiliki akses console terminal maka:
+    ~~~
+    setting semua Storage: ephemeral
+    Dikarenakan kita akan terkena akses Permission Denied jika config tanpa itu 
+    ~~~
+ 
+ klik **Create**
 ![](../images/preparation-36.png)
 5. Anda akan otomatis di redirect ke halaman proses provisioning. Tunggu hingga proses selesai
 ![](../images/preparation-37.png)
