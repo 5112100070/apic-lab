@@ -3,7 +3,6 @@ kind: ClusterServiceVersion
 metadata:
   annotations:
     olm.skipRange: '>=3.1.0 <3.2.0'
-    cloudpakId: c8b82d189e7545f0892db9ef2731b90d
     certified: 'false'
     olm.targetNamespaces: cp4i
     operatorframework.io/properties: >-

@@ -49,7 +49,7 @@ Buka Techzone -> My Reservation -> Pilih reservasi anda.
     Pada dokument ini penulis akan menggunakan cara ke-2 karena lebih cepat dan simple.
 
 6. Buka menu **Storage** -> **StorageClasses**. Klik Tombol **Create StorageClass**
-Gunakan [yaml](../../Misc/yaml-backup/kafka-techzone.yaml) ini ke dalam konfigurasi.
+Gunakan [yaml](../../Misc/yaml-backup/kafka-techzone-storageclass.yaml) ini ke dalam konfigurasi.
 
 7. Ulangi langkah untuk installasi Kafka.
 ![](images/kafka-error-7.png)
