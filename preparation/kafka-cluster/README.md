@@ -16,7 +16,8 @@ Pada kasus yang saya inginkan, saya menggunakan **Production 3 Brokers**
 ![](../images/preparation-36.png)
 5. Anda akan otomatis di redirect ke halaman proses provisioning. Tunggu hingga proses selesai
 ![](../images/preparation-37.png)
-
+6. Ketika selesai dan sukses. Nama dari kluster menjadi dapat di-klik. Klik untuk masuk ke dalam dashboard CP4I Kafka ![](../images/preparation-38.png)
+ 
 ## Fixing Bug error unknown Ketika provisioning Kafka
 Ketika menggunakan provisioning kafka di CP4I di kita ada kemungkinan mendapatkan kasus dimana **error unknown**. 
 Seperti pada gambar. 
