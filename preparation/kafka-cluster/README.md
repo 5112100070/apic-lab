@@ -14,13 +14,8 @@ Pada kasus yang saya inginkan, saya menggunakan **Production 3 Brokers**
 ![](../images/preparation-35.png)
 4. Setting detail kafka yang diinginkan
 
-    Konfigurasi bersifat bebas. Namun, perlu diperhatikan karena kita tidak memiliki akses console terminal maka:
-    ~~~
-    setting semua Storage: ephemeral
-    Dikarenakan kita akan terkena akses Permission Denied jika config tanpa itu 
-    ~~~
- 
- klik **Create**
+    Konfigurasi bersifat bebas. Namun, perlu diperhatikan saat memilih storage untuk penyimpanan harus dalam kategori **match** 
+    Anda dapat membuat ClassStorage khusus untuk kafka. contoh [template](../../Misc/yaml-backup/kafka-techzone-storageclass.yaml).
 ![](../images/preparation-36.png)
 5. Anda akan otomatis di redirect ke halaman proses provisioning. Tunggu hingga proses selesai
 ![](../images/preparation-37.png)
@@ -29,6 +24,7 @@ Pada kasus yang saya inginkan, saya menggunakan **Production 3 Brokers**
 ## Fixing Bug error unknown Ketika provisioning Kafka
 Ketika menggunakan provisioning kafka di CP4I di kita ada kemungkinan mendapatkan kasus dimana **error unknown**. 
 Seperti pada gambar. 
+Hal ini bisa disebabkan karena kafka atau zookepeer tidak dapat meng-*claim* sebuah blok storage.
 ![](images/kafka-error-1.png)
 
 Untuk men-solve nya dapat dilakukan dengan langkah berikut:
@@ -53,11 +49,12 @@ Buka Techzone -> My Reservation -> Pilih reservasi anda.
     ![](images/kafka-error-6.png)
 5. Ada 2 cara untuk menyelesaikan cara ini.        
     1. Uninstall Kafka lama dan gunakan template [yaml](../../Misc/yaml-backup/kafka-techzone.yaml).
-    2. Buat Storage class dengan nama **enter-storage-class-name-here**    
+    2. Buat Storage class baru.   
     Pada dokument ini penulis akan menggunakan cara ke-2 karena lebih cepat dan simple.
 
 6. Buka menu **Storage** -> **StorageClasses**. Klik Tombol **Create StorageClass**
 Gunakan [yaml](../../Misc/yaml-backup/kafka-techzone-storageclass.yaml) ini ke dalam konfigurasi.
 
-7. Ulangi langkah untuk installasi Kafka.
+7. Ulangi langkah untuk installasi Kafka. Dan pilih StorageClass yang tadi telah didefinisikan saat membuat kafka cluster.
+![](images/kafka-error-8.png)
 ![](images/kafka-error-7.png)

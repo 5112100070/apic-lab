@@ -1,37 +1,56 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: enter-storage-class-name-here
+  name: apic-kafka
   labels:
-    addonmanager.kubernetes.io/mode: EnsureExists
     kubernetes.io/cluster-service: 'true'
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"labels":{"kubernetes.io/cluster-service":"true"},"name":"cp4i-block-performance"},"parameters":{"billingType":"hourly","classVersion":"2","sizeIOPSRange":"\"[1-39]Gi:[1000]\"\n\"[40-79]Gi:[2000]\"\n\"[80-99]Gi:[4000]\"\n\"[100-499]Gi:[5000-6000]\"\n\"[500-999]Gi:[5000-10000]\"\n\"[1000-1999]Gi:[10000-20000]\"\n\"[2000-2999]Gi:[20000-40000]\"\n\"[3000-12000]Gi:[24000-48000]\"","type":"Performance"},"provisioner":"ibm.io/ibmc-block","reclaimPolicy":"Delete","volumeBindingMode":"Immediate"}
+    storageclass.kubernetes.io/is-default-class: 'false'
   managedFields:
-    - manager: Mozilla
+    - manager: kubectl-client-side-apply
       operation: Update
       apiVersion: storage.k8s.io/v1
       fieldsType: FieldsV1
       fieldsV1:
         'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
           'f:labels':
             .: {}
-            'f:addonmanager.kubernetes.io/mode': {}
             'f:kubernetes.io/cluster-service': {}
         'f:parameters':
           .: {}
           'f:billingType': {}
           'f:classVersion': {}
-          'f:iopsPerGB': {}
-          'f:sizeRange': {}
+          'f:sizeIOPSRange': {}
           'f:type': {}
         'f:provisioner': {}
         'f:reclaimPolicy': {}
         'f:volumeBindingMode': {}
-provisioner: ibm.io/ibmc-file
+    - manager: kubectl-patch
+      operation: Update
+      apiVersion: storage.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:storageclass.kubernetes.io/is-default-class': {}
+provisioner: ibm.io/ibmc-block
 parameters:
   billingType: hourly
   classVersion: '2'
-  iopsPerGB: '2'
-  sizeRange: '[20-12000]Gi'
-  type: Endurance
+  sizeIOPSRange: |-
+    "[1-39]Gi:[1000]"
+    "[40-79]Gi:[2000]"
+    "[80-99]Gi:[4000]"
+    "[100-499]Gi:[5000-6000]"
+    "[500-999]Gi:[5000-10000]"
+    "[1000-1999]Gi:[10000-20000]"
+    "[2000-2999]Gi:[20000-40000]"
+    "[3000-12000]Gi:[24000-48000]"
+  type: Performance
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
