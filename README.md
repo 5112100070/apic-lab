@@ -11,8 +11,9 @@ Sebelum melakukan demo ikuti langkah ini untuk melakukan provisioning dan standa
 Untuk tutorial ini bersifat **Optional**. Tutorial ini jika memang ada keperluan untuk melakukan full demo CP4I secara terintegrasi. 
 
 Langkah-langkah yang perlu dipersiapkan adalah:
-1. Siapkan Platform Standart CP4I [Click To See Preparation](https://github.com/5112100070/apic-lab/tree/master/preparation)
-2. Siapkan Platform Untuk Cluster [**Kafka**](preparation/kafka-cluster/).
+1. [Siapkan Platform Standart CP4I](https://github.com/5112100070/apic-lab/tree/master/preparation)
+2. [Siapkan Platform Untuk Cluster Kafka](preparation/kafka-cluster/)
+3. [Menyiapkan konfigurasi Produser Kafka](preparation/kafka-producer/kafka-config.md)
 
 
 ### APIC demo guided lab
